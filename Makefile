@@ -16,10 +16,8 @@ clean:
 	find ./* -name '*.coverage' -exec rm {} \;
 	@# A minus sign prefixing the line means it ignores the return value
 	-find ./* -path '*__pycache__' -exec rm -rf {} \;
-	@# remove all the MockSSH keys
-	-find ./* -name '*.key' -exec rm {} \;
 	-rm -rf .eggs/
-	-rm -rf dist/ aciClient.egg-info/ setuptools*
+	-rm -rf dist/ pyDefi.egg-info/ setuptools*
 .PHONY: help
 help:
 	@# An @ sign prevents outputting the command itself to stdout
