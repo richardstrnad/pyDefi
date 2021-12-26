@@ -4,10 +4,14 @@ from distutils.core import setup
 
 setup(
         name='pyDefi',
-        version='0.0.1',
+        version='0.0.2',
         description='Python SDK for the DefiChain',
         author='Richard Strnad',
         author_email='richard@strnad.ch',
         url='',
-        packages=['pyDefi']
+        packages=['pyDefi'],
+        install_requires=[
+            'jsonrpcclient',
+            'requests'
+        ]
      )
