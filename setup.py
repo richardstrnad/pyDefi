@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
         name='pyDefi',
         version='0.0.2',
-        description='Python SDK for the DefiChain',
+        description='Python SDK for the DeFiChain',
         author='Richard Strnad',
         author_email='richard@strnad.ch',
         url='',
