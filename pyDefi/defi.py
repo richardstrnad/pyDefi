@@ -1,10 +1,11 @@
-from jsonrpcclient import parse, request
+from jsonrpcclient import request
 
 import requests
 import logging
 
 logger = logging.getLogger('main.defi')
 logger.addHandler(logging.NullHandler())
+
 
 class Defi(object):
     def __init__(self, host, walletpassphrase):
@@ -25,13 +26,16 @@ class Defi(object):
         )
         if resp.status_code == 200:
             return resp.json().get('result')
-        logger.error(f'Issue with the request, status code: {resp.status_code}')
+        logger.error(
+            f'Issue with the request, status code: {resp.status_code}'
+        )
         logger.error('Dump of the json object')
         logger.error(resp.json())
 
     def unlock_wallet(self, duration=600):
         return self._request(
-            request("walletpassphrase",
+            request(
+                "walletpassphrase",
                 params=(
                     self.walletpassphrase,
                     duration
@@ -39,15 +43,15 @@ class Defi(object):
             )
         )
 
-
     class _Wallet(object):
         def __init__(self, defi):
             self.defi = defi
 
         def sendToAddress(self, address, amount, comment='', comment_to='',
-        subtractfeefromamount=False):
+                          subtractfeefromamount=False):
             return self.defi._request(
-                request("sendtoaddress",
+                request(
+                    "sendtoaddress",
                     params=(
                         address,
                         amount,
@@ -98,11 +102,6 @@ class Defi(object):
                 request("listunspent")
             )
 
-        def getTransaction(self):
-            return self.defi._request(
-                request("gettransaction")
-            )
-
         def getNewAddress(self, label=''):
             return self.defi._request(
                 request(
@@ -112,7 +111,6 @@ class Defi(object):
                     )
                 )
             )
-
 
     class _Loan(object):
         def __init__(self, defi):
@@ -156,7 +154,6 @@ class Defi(object):
                 )
             )
 
-
     class _Pool(object):
         def __init__(self, defi):
             self.defi = defi
@@ -166,13 +163,14 @@ class Defi(object):
                 request("listpoolpairs")
             )
 
-        def poolSwap(self, from_addr, tokenFrom, amountFrom, to_addr, tokenTo, maxPrice=0):
+        def poolSwap(self, from_addr, tokenFrom, amountFrom, to_addr, tokenTo,
+                     maxPrice=0):
             return self.defi._request(
                 request(
                     "poolswap",
                     params={
                         'metadata': {
-                            'from':from_addr,
+                            'from': from_addr,
                             'tokenFrom': tokenFrom,
                             'amountFrom': amountFrom,
                             'to': to_addr,
@@ -182,14 +180,14 @@ class Defi(object):
                     })
             )
 
-
-        def testPoolSwap(self, from_addr, tokenFrom, amountFrom, to_addr, tokenTo, maxPrice=0):
+        def testPoolSwap(self, from_addr, tokenFrom, amountFrom, to_addr,
+                         tokenTo, maxPrice=0):
             return self.defi._request(
                 request(
                     "testpoolswap",
                     params={
                         'metadata': {
-                            'from':from_addr,
+                            'from': from_addr,
                             'tokenFrom': tokenFrom,
                             'amountFrom': amountFrom,
                             'to': to_addr,
@@ -198,7 +196,6 @@ class Defi(object):
                         }
                     })
             )
-
 
     class _Oracle(object):
         def __init__(self, defi):
@@ -213,7 +210,6 @@ class Defi(object):
             return self.defi._request(
                 request("listprices")
             )
-
 
     class _Token(object):
         def __init__(self, defi):
@@ -234,7 +230,6 @@ class Defi(object):
                     )
                 )
             )
-
 
     class _Account(object):
         def __init__(self, defi):
@@ -259,7 +254,6 @@ class Defi(object):
                     )
                 )
             )
-
 
     class _Blockchain(object):
         def __init__(self, defi):
